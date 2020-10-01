@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Report</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    @media only screen and (max-width: 600px) {
+              .pic{
+                width: 300px;
+              }
+        }
+
+      .column {
+        float: left;
+        width: 50%;
+        padding: 5px;
+      }
+
+      .row::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+      .navbar{
+        background-color: maroon;
+
+      }
+      .navbar  .navbar-nav .nav-item .nav-link{
+          color: white;
+      }
+
+      #navbarNav{
+        color: white;
+      }
+      body{
+        font-family: Georgia, 'Times New Roman', Times, serif;
+      }
+      .container{
+          font-family: Georgia, 'Times New Roman', Times, serif;
+          color:maroon;
+      }
+
+    </style>
+
+  </head>
+    <body>
+      <nav class="navbar fixed-top navbar-expand-lg navbar-light ">
+        <a class="navbar-brand" style="color:white" href="{% url 'reporthome' %}">Attendance Report</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'reporthome' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'reportabout' %}">About</a>
+            </li>
+
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{sheet}}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#visualize">Visualize</a>
+                <a class="dropdown-item" href="#student">Student's Report</a>
+                <a class="dropdown-item" href="#list">Filtered List</a>
+              </div>
+            </li>
+          </ul>
+          <ul class="nav navbar navbar-right ml-auto">
+          <li class="nav-item">
+            <a style="background-color:white;color:maroon " class="btn"  onclick="this.href='data:text/html;charset=UTF-8,'+encodeURIComponent(document.documentElement.outerHTML)" href="#" download="analyse.html">Download</a>
+          </li>
+          </ul>
+        </div>
+      </nav>
+      <br><br><br>
+<div class="container">
+    <div class="text-center">
+
+      <div class="card-body">
+        <h2 class="card-title" id="daywisedata">Attendance Report : {{start}} to {{end}}</h2><br>
+        <center>
+          <div style="overflow-x:auto;">
+          <table class="table">{{values | safe}}</table>
+        </div>
+        </center><br>
+<br>
+<!-- </div>
+</div>
+</div> -->
+
+        <div class="container">
+            <h2 id="visualize">Visualisation</h2>
+          <div class="row">
+            <div class="col-lg-6 col-sm-12" >
+                {% autoescape off %}
+                <div class="pic">
+                  {{ fig1 | safe }}
+                </div>
+
+                {% endautoescape %}
+            </div>
+            <div class="col-lg-6 col-sm-12">
+                {% autoescape off %}
+                <div class="pic">
+                  {{ fig2 | safe }}
+                </div>
+
+                {% endautoescape %}
+            </div>
+          </div>
+        </div>
+
+<br><br>
+        <div class="container">
+          <h2 id="student">Student's Report</h2>
+          <center>
+          <div style="overflow-x:auto;">
+            <table class="table">{{ student | safe}}</table>
+          </div></center><br>
+        </div>
+<br><br>
+
+        <div class="container">
+          <h2 id="list">Attendance less than {{num}}% </h2><br>
+          <h6>( {{less_25}} Students )</h6>
+          <center>
+            <div style="overflow-x:auto;">
+            <table class="table">{{less_than_25 | safe}}</table>
+          </div>
+          </center><br>
+        </div>
+      </div>
+   </div>
+  </div>
+
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
